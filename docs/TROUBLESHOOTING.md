@@ -8,9 +8,35 @@
 
 ## WhatsApp client fails to start (Puppeteer / browser issues)
 
+- Install Puppeteer's managed Chrome:
+
+```bash
+npx puppeteer browsers install chrome
+```
+
 - Install system dependencies required by Chromium (Linux)
 - Try updating `whatsapp-web.js`
 - Ensure no security software is blocking local browser launch
+
+Typical error:
+
+- `Could not find Chrome (...)`
+
+## `better-sqlite3` binding missing (`better_sqlite3.node`)
+
+If startup fails with a native binding error, the SQLite package was likely installed without running scripts or needs a rebuild.
+
+Fix:
+
+```bash
+npm rebuild better-sqlite3
+```
+
+Or reinstall normally (without `--ignore-scripts`):
+
+```bash
+pnpm install
+```
 
 ## Bot replies to no messages
 
@@ -43,6 +69,16 @@ ollama pull llama3.1
 - Confirm `ffmpeg` is in `PATH`
 - Try a smaller STT model (`STT_MODEL_SIZE=tiny` or `small`)
 - Inspect STT logs in terminal
+- Verify `/health` responds:
+
+```bash
+curl http://127.0.0.1:8001/health
+```
+
+Common first-run issues:
+
+- `No module named uvicorn` -> run `pip install -r requirements.txt` in `services/stt/.venv`
+- `No module named requests` -> update/install dependencies again (`pip install -r requirements.txt`)
 
 ## Audio received but no voice reply
 
@@ -51,6 +87,9 @@ ollama pull llama3.1
   - `services/tts/voices/*.onnx`
   - `services/tts/voices/*.onnx.json`
 - Check `ffmpeg` conversion works (`ffmpeg -version`)
+- If using project-local ffmpeg, verify file exists:
+  - Windows: `tools/ffmpeg/ffmpeg.exe`
+  - Linux: `tools/ffmpeg/ffmpeg`
 - Try `/voice off` to validate text path independently
 
 ## Piper exits with error

@@ -4,7 +4,7 @@ This folder contains the product and developer documentation for OpenTutor.
 
 ## Documents
 
-- `INSTALL_CONFIG_GUIDE_PTBR.md`: guia em português com links oficiais e passo a passo de instalação/configuração
+- `INSTALL_CONFIG_GUIDE.md`: detailed installation and configuration guide with official links and setup/run steps
 - `QUICKSTART.md`: installation and first run (Windows + Linux)
 - `ARCHITECTURE.md`: module boundaries, data flow, and design decisions
 - `PEDAGOGY.md`: tutor rules, FSM, correction policies, and teaching principles

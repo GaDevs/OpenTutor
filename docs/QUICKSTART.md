@@ -19,6 +19,15 @@ cd OpenTutor
 pnpm install
 ```
 
+Important:
+
+- Do not use `--ignore-scripts` on install, because `better-sqlite3` needs native bindings.
+- If you see a `better_sqlite3.node` binding error, run:
+
+```bash
+npm rebuild better-sqlite3
+```
+
 ## 3. Configure environment
 
 ```bash
@@ -158,6 +167,27 @@ Optional STT tuning:
 export STT_MODEL_SIZE=small
 export STT_DEVICE=cpu
 export STT_COMPUTE_TYPE=int8
+```
+
+You can verify STT before running the bot:
+
+```bash
+cd services/stt
+python -m uvicorn app:app --host 0.0.0.0 --port 8001
+```
+
+Then check:
+
+```bash
+curl http://127.0.0.1:8001/health
+```
+
+## 7.5 Install Puppeteer Chrome (required by `whatsapp-web.js`)
+
+If Chrome/Chromium is not found on first run, install Puppeteer's managed Chrome:
+
+```bash
+npx puppeteer browsers install chrome
 ```
 
 ## 8. Run OpenTutor (bot + STT)
