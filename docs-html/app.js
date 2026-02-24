@@ -1,5 +1,6 @@
 const DOCS = [
   "README.md",
+  "INSTALL_CONFIG_GUIDE_PTBR.md",
   "QUICKSTART.md",
   "ARCHITECTURE.md",
   "PEDAGOGY.md",
