@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: opentutor-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    # CPU-only by default. No GPU required.
+
+volumes:
+  ollama-data:
+
+# Notes:
+# - The WhatsApp bot usually runs on the host (whatsapp-web.js + LocalAuth + QR terminal).
+# - STT can also run on the host (services/stt) or in a custom container you build separately.

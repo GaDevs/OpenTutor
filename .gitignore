@@ -1,0 +1,32 @@
+# Node / TypeScript
+node_modules/
+dist/
+.pnpm-store/
+*.tsbuildinfo
+
+# Env / local config
+.env
+.env.local
+
+# Runtime data
+data/
+tmp/
+logs/
+sessions/
+
+# Python
+__pycache__/
+.venv/
+venv/
+*.pyc
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Audio artifacts
+*.wav
+*.ogg
+*.opus

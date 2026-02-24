@@ -1,0 +1,25 @@
+{
+  "name": "opentutor",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Self-hosted AI language tutor for WhatsApp with local Ollama, Faster-Whisper, and Piper.",
+  "license": "MIT",
+  "packageManager": "pnpm@10.10.0",
+  "workspaces": [
+    "apps/*",
+    "core/*"
+  ],
+  "scripts": {
+    "build": "pnpm -r run build",
+    "dev": "node -e \"const {spawn}=require('child_process'); const path=require('path'); const isWin=process.platform==='win32'; const script=path.join('scripts', isWin ? 'dev-run-all.ps1' : 'dev-run-all.sh'); const cmd=isWin ? 'powershell' : 'bash'; const args=isWin ? ['-ExecutionPolicy','Bypass','-File',script] : [script]; const p=spawn(cmd,args,{stdio:'inherit', shell:false}); p.on('exit', c => process.exit(c ?? 0));\"",
+    "lint": "pnpm -r run typecheck",
+    "typecheck": "pnpm -r run typecheck",
+    "clean": "pnpm -r run clean"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "concurrently": "^9.1.2",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  }
+}
