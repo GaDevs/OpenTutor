@@ -15,12 +15,6 @@ This folder contains the product and developer documentation for OpenTutor.
 
 ## HTML docs viewer
 
-Open `docs-html/index.html` using a local static server (recommended), for example:
+Open `docs-html/index.html` directly in your browser.
 
-```bash
-python -m http.server 8080
-```
-
-Then visit:
-
-- `http://localhost:8080/docs-html/`
+The HTML docs viewer ships with the documentation content embedded in `docs-html/app.js`, so it does not need `fetch` or a local web server.
