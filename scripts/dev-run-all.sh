@@ -4,6 +4,16 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 ROOT_DIR="$(pwd)"
 
+if [[ -z "${FFMPEG_BIN:-}" ]]; then
+  if [[ -x "$ROOT_DIR/tools/ffmpeg/ffmpeg" ]]; then
+    export FFMPEG_BIN="$ROOT_DIR/tools/ffmpeg/ffmpeg"
+    echo "Using local ffmpeg: $FFMPEG_BIN"
+  elif [[ -f "$ROOT_DIR/tools/ffmpeg/ffmpeg.exe" ]]; then
+    export FFMPEG_BIN="$ROOT_DIR/tools/ffmpeg/ffmpeg.exe"
+    echo "Using local ffmpeg: $FFMPEG_BIN"
+  fi
+fi
+
 PYTHON_BIN="${PYTHON_BIN:-}"
 if [[ -z "$PYTHON_BIN" ]]; then
   if [[ -x services/stt/.venv/bin/python ]]; then

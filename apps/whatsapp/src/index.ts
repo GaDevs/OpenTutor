@@ -55,10 +55,24 @@ function envInt(name: string, fallback: number): number {
   return Number.isFinite(value) && value > 0 ? Math.floor(value) : fallback;
 }
 
+function resolveLocalToolBinary(relativeCandidates: string[]): string | undefined {
+  for (const candidate of relativeCandidates) {
+    const resolved = path.resolve(candidate);
+    if (fs.existsSync(resolved)) {
+      return resolved;
+    }
+  }
+  return undefined;
+}
+
 function loadConfig(): AppConfig {
   const tempDir = process.env.TEMP_DIR || "./tmp";
   const sessionDir = process.env.WHATSAPP_SESSION_DIR || "./sessions";
   const dbPath = process.env.DB_PATH || "./data/opentutor.sqlite";
+  const localFfmpeg = resolveLocalToolBinary([
+    "./tools/ffmpeg/ffmpeg.exe",
+    "./tools/ffmpeg/ffmpeg"
+  ]);
   return {
     allowGroups: envBool("ALLOW_GROUPS", false),
     sendTextWithVoiceDefault: envBool("SEND_TEXT_WITH_VOICE", true),
@@ -79,7 +93,7 @@ function loadConfig(): AppConfig {
       piperBin: process.env.PIPER_BIN || "piper",
       piperModel: process.env.PIPER_MODEL || "./services/tts/voices/en_US-lessac-medium.onnx",
       piperConfig: process.env.PIPER_CONFIG || undefined,
-      ffmpegBin: process.env.FFMPEG_BIN || "ffmpeg"
+      ffmpegBin: process.env.FFMPEG_BIN || localFfmpeg || "ffmpeg"
     },
     ollama: {
       baseUrl: process.env.OLLAMA_BASE_URL || "http://127.0.0.1:11434",
@@ -262,6 +276,7 @@ async function main(): Promise<void> {
   console.log(`[app] Ollama: ${config.ollama.baseUrl} model=${config.ollama.model}`);
   console.log(`[app] STT: ${config.stt.baseUrl}`);
   console.log(`[app] TTS Piper model: ${config.tts.piperModel}`);
+  console.log(`[app] ffmpeg: ${config.tts.ffmpegBin}`);
   console.log(`[app] DB: ${config.dbPath}`);
 
   if (llm.healthCheck) {

@@ -3,6 +3,20 @@ param()
 $ErrorActionPreference = "Stop"
 Set-Location (Split-Path -Parent $PSScriptRoot)
 
+if (-not $env:FFMPEG_BIN) {
+  $localFfmpegCandidates = @(
+    (Join-Path (Get-Location) "tools/ffmpeg/ffmpeg.exe"),
+    (Join-Path (Get-Location) "tools/ffmpeg/ffmpeg")
+  )
+  foreach ($candidate in $localFfmpegCandidates) {
+    if (Test-Path $candidate) {
+      $env:FFMPEG_BIN = $candidate
+      Write-Host "Using local ffmpeg: $candidate"
+      break
+    }
+  }
+}
+
 function Get-PythonCommand {
   $candidates = @(
     "services/stt/.venv/Scripts/python.exe",

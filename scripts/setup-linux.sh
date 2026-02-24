@@ -12,7 +12,7 @@ else
   echo ".env already exists (keeping current file)"
 fi
 
-mkdir -p data tmp sessions services/tts/voices
+mkdir -p data tmp sessions services/tts/voices tools/ffmpeg
 
 if command -v pnpm >/dev/null 2>&1; then
   echo "Installing Node dependencies with pnpm..."
@@ -29,7 +29,9 @@ cat <<'EOF'
 
 Manual dependencies still required:
 1) Install Ollama and run: ollama pull llama3.1
-2) Install ffmpeg and ensure "ffmpeg" is in PATH
+2) Install ffmpeg and either:
+   - keep "ffmpeg" in PATH, or
+   - place the binary at ./tools/ffmpeg/ffmpeg (auto-detected)
 3) Install Piper binary and ensure "piper" is in PATH (or set PIPER_BIN)
 4) Download a Piper voice: ./scripts/download-piper-voice.sh
 5) Create Python venv for STT and install requirements:

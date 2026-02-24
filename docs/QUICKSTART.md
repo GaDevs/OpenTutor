@@ -7,7 +7,7 @@ This guide gets OpenTutor running locally with WhatsApp text + voice.
 - Node.js `20+`
 - `pnpm` (recommended)
 - Python `3.10+`
-- `ffmpeg` installed and in `PATH`
+- `ffmpeg` (either in `PATH` or placed inside `./tools/ffmpeg/`)
 - Ollama installed
 - Piper binary installed
 
@@ -68,10 +68,21 @@ OpenTutor needs `ffmpeg` for:
 - STT decoding compatibility (Faster-Whisper dependency)
 - WAV -> OGG/Opus conversion for WhatsApp voice notes
 
+OpenTutor supports two ways to use `ffmpeg`:
+
+- Global install in `PATH`
+- Local project binary in `./tools/ffmpeg/` (recommended for easier setup sharing)
+
+If `FFMPEG_BIN` is not set, OpenTutor tries:
+
+- Windows: `./tools/ffmpeg/ffmpeg.exe`
+- Linux: `./tools/ffmpeg/ffmpeg`
+- then falls back to `ffmpeg` from `PATH`
+
 ### Windows
 
 - Install via `winget`, `choco`, or manual zip
-- Ensure `ffmpeg.exe` is in `PATH`
+- Ensure `ffmpeg.exe` is in `PATH`, or copy it to `.\tools\ffmpeg\ffmpeg.exe`
 
 Example (`winget`, may vary by package id):
 
@@ -84,6 +95,13 @@ winget install ffmpeg
 ```bash
 sudo apt-get update
 sudo apt-get install -y ffmpeg
+```
+
+If you want a project-local binary instead of PATH, copy it to:
+
+```bash
+./tools/ffmpeg/ffmpeg
+chmod +x ./tools/ffmpeg/ffmpeg
 ```
 
 ## 6. Install Piper and voice model
